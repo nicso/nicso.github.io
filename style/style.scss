@@ -1,0 +1,454 @@
+@import "variables";
+
+*,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: $bg;
+  color: $txt-clr;
+  font-family: "Bebas Neue", sans-serif;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+//#region header
+header {
+  position: sticky;
+  top: calc($nav-bar-height * -1 + 50px);
+  height: $nav-bar-height;
+  width: 100vw;
+  z-index: 999;
+  backdrop-filter: blur($backdrop-blur);
+  border-bottom: 1px dashed $txt-clr;
+  overflow: hidden;
+
+  //----- LOGO -----//
+  h1 {
+    position: absolute;
+    font-size: 8rem;
+    left: 80px;
+    bottom: 180px;
+    border-bottom: 2px dashed $txt-clr;
+    height: 0.96em;
+  }
+
+  .title-style {
+    font-size: 6rem;
+    border-top: 5px solid $accent-color;
+  }
+
+  //----- LOGO -----//
+
+  .bg-image {
+    position: absolute;
+    top: 0;
+    z-index: -999;
+    opacity: 0.3;
+    width: 100%;
+    filter: blur(5px) saturate(1.2);
+  }
+}
+
+.nav-bar {
+  margin: auto;
+  padding-top: calc($nav-bar-height - 50px);
+  width: fit-content;
+  font-weight: bold;
+  font-size: 2em;
+
+  ul {
+    margin-top: 6px;
+    list-style: none;
+    width: 50vw;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+
+    a {
+      color: $txt-clr;
+      text-decoration: none;
+
+      &::after { // navigation underlines
+        transition: 0.3s;
+        margin: auto;
+        width: 10%;
+        border-radius: 50px;
+        content: '';
+        display: block;
+        border-bottom: 55px solid $accent-color;
+      }
+
+      &:hover {
+        &::after {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+//endregion header
+
+//#region folio
+#folio {
+  width: 90vw;
+  padding-top: 20px;
+  padding-bottom: 90px;
+}
+
+.folio {
+  scroll-behavior: smooth;
+  scroll-padding-top: 400px;
+  margin: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax($max-photo-size, 1fr));
+  gap: 30px;
+  justify-items: center;
+  z-index: 500;
+
+  transition: 1s;
+  border: 1px dashed rgba(255, 255, 255, 0);
+  &-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &-title {
+      position: absolute;
+      bottom: 0;
+      transition: all 1s;
+      font-size: 3em;
+      text-transform: uppercase;
+      opacity: 0;
+      width: 100%;
+      height: 23%;
+      backdrop-filter: blur(6px) brightness(70%) saturate(3);
+      border-top: 1px dashed $txt-clr;
+      z-index: 80;
+      //filter: brightness(20%);
+      //mix-blend-mode: difference;
+    }
+
+    &-img {
+      width: $max-photo-size;
+      aspect-ratio: 1;
+      transform: scale(1.0);
+      transition: transform 2s, filter 0.6s;
+      filter: saturate(0.8);
+    }
+
+
+    &:hover {
+      transition: 1s;
+      border-radius: 4px;
+      //outline: 1px dashed $txt-clr;
+      border: 1px dashed $txt-clr;
+      border-bottom: $underlin-width solid $accent-color;
+      margin-bottom: calc($underlin-width * -1 - 1px);
+
+      .folio-item-title {
+        opacity: 1;
+        height: 43%;
+      }
+
+      .folio-item-img {
+        z-index: 70;
+        transform: scale(1.15);
+        transition: transform 5s, filter 2.6s;
+        filter: saturate(1.7);
+      }
+    }
+  }
+}
+
+@keyframes anim-folio-item {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+//endregion folio
+
+//#region about
+#about {
+  scroll-margin-top: 50px;
+}
+
+.about {
+  position: absolute;
+  left: -245px;
+  //width: 60vw;
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  gap: 20px;
+
+  .portrait {
+    height: 80vh;
+    filter: saturate(0) brightness(60%);
+    //object-fit: cover;
+    transition: 1s;
+
+    &:hover {
+      transition: 1s;
+      filter: saturate(1.2);
+    }
+  }
+
+  .infos {
+    padding-top: 30px;
+    display: flex;
+    flex-flow: column wrap;
+    padding-right: 50px;
+    border-right: 1px dashed $txt-clr;
+
+    h1 {
+      font-size: 5em;
+      margin-bottom: 20px;
+    }
+
+    p {
+      width: 40vw;
+      font-size: 1.5em;
+    }
+
+  }
+}
+
+//endregion about
+
+//#region contact
+
+.contact {
+  display: grid;
+  grid-auto-columns: 1fr 4fr;
+  grid-template-rows: repeat(5, 1fr);
+  grid-template-areas:
+                      "one    mess"
+                      "two    mess"
+                      "three  mess"
+                      "four   mess"
+                      "five   mess";
+  gap: 30px;
+  accent-color: black;
+  margin-top: 30px;
+  width: 60vw;
+  padding-bottom: 150px;
+  caret-color: $accent-color;
+  .input {
+    background: #363636;
+    border: 1px dashed $txt-clr;
+    color: $txt-clr;
+    padding: 10px;
+
+    &:focus {
+      border: 1px dashed $accent-color;
+      outline: none;
+    }
+  }
+  #in_name {
+    grid-area: one;
+    //height: 30px;
+  }
+
+  #in_mail {
+    grid-area: two;
+  }
+
+  #in_message {
+    grid-area: mess;
+    resize: none;
+  }
+
+  #in_send {
+    grid-area: five;
+    color: $accent-color;
+    border-radius: 30px;
+    &:hover{
+      color: black;
+      background: $accent-color;
+      border: 3px dashed $txt-clr;
+    }
+  }
+
+
+
+}
+
+//endregion
+
+.accent {
+  display: inline-block;
+  color: $accent-color;
+  //font-weight: 900;
+  border-bottom: 1px dashed $accent-color;
+  height: 0.96em;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  display: block;
+  width: 100%;
+  text-align: end;
+  font-size: 2em;
+  overflow: hidden;
+  height: 60px;
+  backdrop-filter: blur($backdrop-blur);
+  border-top: 1px dashed $txt-clr;
+
+  p {
+    font-family: Impact ,sans-serif;
+    text-transform: uppercase;
+    position: absolute;
+    right: 10px;
+    bottom: 0;
+  }
+}
+
+@media screen and (max-width: 1135px) {
+  header {
+    top: calc(($nav-bar-height / 3) * -1 + 50px);
+    height: calc($nav-bar-height / 3);
+
+
+  }
+  .nav-bar {
+    padding-top: calc(($nav-bar-height / 3) - 50px);
+  }
+}
+
+@media screen and (max-width: 766px) {
+  //responsive folio's grid
+  .folio {
+    grid-template-columns: repeat(auto-fit, minmax($min-photo-size, 1fr));
+    gap: 2px;
+    margin: 10px;
+  }
+  .folio-item-img {
+    width: $min-photo-size;
+  }
+  //nav bar
+  .nav-bar {
+    //display: none;
+    font-size: 1em;
+    padding-top: 142px;
+  }
+}
+
+@media screen and (max-width: 740px) {
+  .about {
+    left: 0;
+    flex-flow: column;
+    overflow: hidden;
+
+    .infos {
+      padding-left: 30px;
+      padding-right: 0;
+      width: 85vw;
+
+      p {
+        width: 70%;
+      }
+    }
+
+    .portrait {
+      position: absolute;
+      top: 0;
+      z-index: -999;
+      opacity: 0.2;
+      width: 100%;
+      //height: 150px;
+      object-fit: cover;
+      //display: none;
+    }
+  }
+  .contact {
+    grid-template-areas:
+                      "one    one"
+                      "two    two"
+                      "mess  mess"
+                      "mess   mess"
+                      "five   five";
+
+    .input {
+      //height: 10px;
+    }
+
+    #in_message {
+      //height: 20vh;
+    }
+  }
+}
+
+@media screen and (max-width: 1135px) { // center title on small screens
+  header {
+    h1 {
+      left: 0;
+      right: 0;
+      bottom: 50px;
+      margin-left: auto;
+      margin-right: auto;
+      width: fit-content;
+    }
+  }
+}
+
+//TODO : break under 390
+@media screen and (max-width: 390px) {
+  .contact{
+    width: 90vw;
+  }
+  header {
+    //----- LOGO -----//
+    h1 {
+      font-size: 4rem;
+    }
+
+    .title-style {
+      font-size: 3rem;
+
+    }
+
+    //----- LOGO -----//
+  }
+  $mini-thumbs: 100px;
+  .folio {
+    margin: 0;
+    grid-template-columns: repeat(auto-fit, minmax($mini-thumbs, 1fr));
+  }
+  .folio-item-img {
+    width: $mini-thumbs;
+  }
+  .folio-item {
+    border-radius: 0;
+  }
+}
+
+@media not (hover: hover) {
+  .folio-item {
+    border-radius: 0;
+    //outline: 1px dashed $txt-clr;
+    border: 1px dashed $txt-clr;
+    //border-bottom: $underlin-width solid $accent-color;
+    //margin-bottom: calc($underlin-width*-1 - 1px);
+    &-title {
+      opacity: 1;
+      font-size: 1.5em;
+      height: 40px;
+    }
+  }
+
+}
